@@ -2,33 +2,37 @@ import { motion, useMotionValue, useTransform } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { CodeEditorWindow } from './CodeEditorWindow';
 import { Send } from 'lucide-react';
-import logo from 'figma:asset/afbc1910fda1cd12228ff9fa0dc8a188c86ad6f2.png';
 import { useLanguage } from '../hooks/useLanguage';
+import { usePrefersFinePointer } from '../hooks/usePrefersFinePointer';
 
 export function EngineRoom() {
   const language = useLanguage();
+  const parallax = usePrefersFinePointer();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const [mounted, setMounted] = useState(false);
-  
-  const rotateX = useTransform(mouseY, [0, window.innerHeight], [15, -15]);
-  const rotateY = useTransform(mouseX, [0, window.innerWidth], [-15, 15]);
-  
-  const copperBeamX = useTransform(mouseX, [0, window.innerWidth], [-200, 200]);
-  const copperBeamY = useTransform(mouseY, [0, window.innerHeight], [-100, 100]);
-  const glacialBeamX = useTransform(mouseX, [0, window.innerWidth], [200, -200]);
-  const glacialBeamY = useTransform(mouseY, [0, window.innerHeight], [100, -100]);
+  const [dims, setDims] = useState({ w: 1200, h: 800 });
+
+  const copperBeamX = useTransform(mouseX, [0, dims.w], [-200, 200]);
+  const copperBeamY = useTransform(mouseY, [0, dims.h], [-100, 100]);
+  const glacialBeamX = useTransform(mouseX, [0, dims.w], [200, -200]);
+  const glacialBeamY = useTransform(mouseY, [0, dims.h], [100, -100]);
 
   useEffect(() => {
-    setMounted(true);
+    if (!parallax) return;
+    const readDims = () =>
+      setDims({ w: window.innerWidth || 1200, h: window.innerHeight || 800 });
+    readDims();
     const handleMouseMove = (e: MouseEvent) => {
       mouseX.set(e.clientX);
       mouseY.set(e.clientY);
     };
-    
+    window.addEventListener('resize', readDims);
     window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, [mouseX, mouseY]);
+    return () => {
+      window.removeEventListener('resize', readDims);
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [mouseX, mouseY, parallax]);
 
   const t = language === 'sq'
     ? {
@@ -54,31 +58,44 @@ export function EngineRoom() {
 
   
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-8 md:pt-12 pb-24">
-      {/* Refracted Light Beams */}
-      <motion.div
-        className="absolute w-96 h-96 rounded-full blur-3xl opacity-20"
-        style={{
-          background: 'radial-gradient(circle, #D27D59 0%, transparent 70%)',
-          x: copperBeamX,
-          y: copperBeamY,
-          left: '30%',
-          top: '20%',
-        }}
-      />
-      <motion.div
-        className="absolute w-96 h-96 rounded-full blur-3xl opacity-20"
-        style={{
-          background: 'radial-gradient(circle, #A0D2EB 0%, transparent 70%)',
-          x: glacialBeamX,
-          y: glacialBeamY,
-          right: '30%',
-          bottom: '20%',
-        }}
-      />
+    <div className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden pt-6 sm:pt-8 md:pt-12 pb-16 sm:pb-24">
+      {/* Refracted light beams — disabled on small / touch screens (heavy blur + listeners) */}
+      {parallax ? (
+        <>
+          <motion.div
+            className="pointer-events-none absolute w-64 h-64 md:w-96 md:h-96 rounded-full blur-2xl md:blur-3xl opacity-15 md:opacity-20"
+            style={{
+              background: 'radial-gradient(circle, #D27D59 0%, transparent 70%)',
+              x: copperBeamX,
+              y: copperBeamY,
+              left: '30%',
+              top: '20%',
+            }}
+          />
+          <motion.div
+            className="pointer-events-none absolute w-64 h-64 md:w-96 md:h-96 rounded-full blur-2xl md:blur-3xl opacity-15 md:opacity-20"
+            style={{
+              background: 'radial-gradient(circle, #A0D2EB 0%, transparent 70%)',
+              x: glacialBeamX,
+              y: glacialBeamY,
+              right: '30%',
+              bottom: '20%',
+            }}
+          />
+        </>
+      ) : (
+        <div
+          className="pointer-events-none absolute inset-0 opacity-30 md:opacity-40"
+          style={{
+            background:
+              'radial-gradient(ellipse 80% 50% at 30% 20%, rgba(210,125,89,0.12), transparent), radial-gradient(ellipse 70% 45% at 70% 60%, rgba(160,210,235,0.1), transparent)',
+          }}
+          aria-hidden
+        />
+      )}
 
       {/* Main Content Grid */}
-      <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center z-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center z-10">
         {/* Left Side - Text Content with Big Logo */}
         <motion.div
           initial={{ opacity: 0, x: -30 }}
@@ -103,14 +120,14 @@ export function EngineRoom() {
             {t.line4}
           </h1>
           
-          <p className="text-xl mb-8 leading-relaxed max-w-lg">
+          <p className="text-base sm:text-lg md:text-xl mb-6 sm:mb-8 leading-relaxed max-w-lg">
             {t.subtitle}
           </p>
 
           {/* Sharp CTA Buttons */}
-          <div className="flex flex-wrap gap-4">
+          <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
             <motion.button
-              className="group relative px-8 py-4 overflow-hidden"
+              className="group relative px-6 py-3.5 sm:px-8 sm:py-4 overflow-hidden w-full sm:w-auto min-h-[48px]"
               style={{
                 background: 'linear-gradient(135deg, #D27D59, #E89B7A)',
                 clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
@@ -143,7 +160,7 @@ export function EngineRoom() {
             </motion.button>
 
             <motion.button
-              className="group relative px-8 py-4 glass-container-strong"
+              className="group relative px-6 py-3.5 sm:px-8 sm:py-4 glass-container-strong w-full sm:w-auto min-h-[48px]"
               style={{
                 clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
               }}
@@ -194,7 +211,7 @@ function ElabSoftWatermark({ text }: { text: string }) {
 
   return (
     <motion.div
-      className="fixed bottom-8 right-8 text-xs tracking-wider"
+      className="fixed bottom-[max(1rem,env(safe-area-inset-bottom))] right-4 sm:right-8 text-xs tracking-wider max-w-[50vw] text-right"
       initial={{ opacity: 0.2 }}
       animate={{ opacity: visible ? 1 : 0.2 }}
       transition={{ duration: 0.8 }}

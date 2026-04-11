@@ -31,8 +31,8 @@ export function ProfessionalFooter() {
       };
 
   return (
-    <footer className="relative mt-32 mb-32">
-      <div className="max-w-7xl mx-auto px-6">
+    <footer className="relative mt-16 sm:mt-24 md:mt-32 mb-16 sm:mb-24 md:mb-32 pb-[env(safe-area-inset-bottom,0px)]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <motion.div
           className="glass-container-strong"
           style={{
@@ -43,16 +43,18 @@ export function ProfessionalFooter() {
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
         >
-          <div className="px-10 py-12">
+          <div className="px-4 py-8 sm:px-8 sm:py-10 md:px-10 md:py-12">
             {/* Top Section */}
-            <div className="grid md:grid-cols-4 gap-12 mb-12">
+            <div className="grid md:grid-cols-4 gap-8 sm:gap-10 md:gap-12 mb-8 sm:mb-12">
               {/* Company Info */}
               <div className="md:col-span-2">
                 <div className="mb-6">
                   <img
                     src={logo}
                     alt="ElabSoft Studio Brand Logo"
-                    className="h-32 md:h-36 w-auto object-contain drop-shadow-lg"
+                    className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto object-contain object-left drop-shadow-lg"
+                    decoding="async"
+                    loading="lazy"
                   />
                 </div>
                 <p className="text-sm leading-relaxed opacity-80 mb-6 max-w-sm">

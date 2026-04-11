@@ -129,7 +129,7 @@ export function AccessibilityOrb() {
 
   return (
     <div
-      className="fixed top-[120px] left-6 z-[9999] flex items-start gap-3 pointer-events-auto"
+      className="fixed top-[calc(4.25rem+env(safe-area-inset-top,0px))] sm:top-24 md:top-[7.5rem] left-4 sm:left-6 z-[9999] flex items-start gap-3 pointer-events-auto"
       aria-live="polite"
     >
       <motion.button
@@ -137,7 +137,7 @@ export function AccessibilityOrb() {
         aria-label={open ? t.close : t.open}
         title={t.heading}
         onClick={() => setOpen((prev) => !prev)}
-        className="w-14 h-14 rounded-full glass-container-strong flex items-center justify-center text-[#D27D59] border border-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D27D59] focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+        className="w-12 h-12 sm:w-14 sm:h-14 rounded-full glass-container-strong flex items-center justify-center text-[#D27D59] border border-white/25 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#D27D59] focus-visible:ring-offset-2 focus-visible:ring-offset-black min-h-[48px] min-w-[48px]"
         whileHover={{ scale: 1.08, y: -2 }}
         whileTap={{ scale: 0.96 }}
       >

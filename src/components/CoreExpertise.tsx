@@ -69,7 +69,7 @@ export function CoreExpertise() {
       };
 
   return (
-    <div className="py-24 px-6">
+    <div className="py-12 sm:py-20 md:py-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -82,13 +82,13 @@ export function CoreExpertise() {
           <h2 className="mb-4">
             {t.titleStart} <span className="text-gradient-copper">{t.titleAccent}</span>
           </h2>
-          <p className="text-xl max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-1">
             {t.subtitle}
           </p>
         </motion.div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
           {t.services.map((service, index) => (
             <ServiceCard key={service.title} service={service} index={index} />
           ))}
@@ -101,7 +101,7 @@ export function CoreExpertise() {
 function ServiceCard({ service, index }: { service: Service; index: number }) {
   return (
     <motion.div
-      className="glass-container p-8 relative group"
+      className="glass-container p-5 sm:p-8 relative group"
       style={{
         borderRadius: 'var(--radius-main)',
       }}

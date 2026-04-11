@@ -24,6 +24,19 @@
   --noise-opacity: 0.02;
 }
 
+@media (max-width: 767px) {
+  :root {
+    --glass-blur: 18px;
+    --noise-opacity: 0.012;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --glass-blur: 12px;
+  }
+}
+
 @layer base {
   * {
     border-color: var(--color-silver-silk);
@@ -127,4 +140,11 @@ html.a11y-high-saturation body {
 
 html.a11y-no-images img {
   visibility: hidden !important;
+}
+
+@media (max-width: 767px) {
+  .refraction-effect {
+    backdrop-filter: blur(4px) brightness(1.06);
+    -webkit-backdrop-filter: blur(4px) brightness(1.06);
+  }
 }

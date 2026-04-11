@@ -68,7 +68,7 @@ export function ExecutionFramework() {
       };
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-12 sm:py-20 md:py-24 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
         <motion.div
           className="text-center mb-16"
@@ -80,16 +80,16 @@ export function ExecutionFramework() {
           <h2 className="mb-4">
             {t.titleStart} <span className="text-gradient-copper">{t.titleAccent}</span>
           </h2>
-          <p className="text-xl max-w-3xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl max-w-3xl mx-auto px-1">
             {t.subtitle}
           </p>
         </motion.div>
 
-        <div className="grid lg:grid-cols-3 gap-6 mb-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-8">
           {t.steps.map((step, index) => (
             <motion.article
               key={step.title}
-              className="glass-container p-8 relative group"
+              className="glass-container p-5 sm:p-8 relative group"
               style={{ borderRadius: 'var(--radius-main)' }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}

@@ -1,15 +1,32 @@
-import { useState } from 'react';
+import { lazy, Suspense, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { EngineRoom } from './components/EngineRoom';
 import { CoreExpertise } from './components/CoreExpertise';
 import { ExecutionFramework } from './components/ExecutionFramework';
-import { BlueprintArchive } from './components/BlueprintArchive';
-import { Contact } from './components/Contact';
 import { ProfessionalFooter } from './components/ProfessionalFooter';
 import { AccessibilityOrb } from './components/AccessibilityOrb';
 import { Menu, X } from 'lucide-react';
 import logo from 'figma:asset/952983e2909debfaa69697fd87a26c282a28d218.png';
 import { useLanguage } from './hooks/useLanguage';
+
+const BlueprintArchive = lazy(async () => {
+  const m = await import('./components/BlueprintArchive');
+  return { default: m.BlueprintArchive };
+});
+
+const Contact = lazy(async () => {
+  const m = await import('./components/Contact');
+  return { default: m.Contact };
+});
+
+function RouteFallback() {
+  return (
+    <div className="min-h-[40vh] flex items-center justify-center px-6">
+      <div className="h-8 w-8 rounded-full border-2 border-[#D27D59]/30 border-t-[#D27D59] animate-spin" aria-hidden />
+      <span className="sr-only">Loading</span>
+    </div>
+  );
+}
 
 export default function App() {
   const [activeScreen, setActiveScreen] = useState<'engine' | 'blueprint' | 'contact'>('engine');
@@ -23,23 +40,30 @@ export default function App() {
     <div className="relative min-h-screen">
       {/* Navigation */}
       <motion.nav
-        className="fixed top-0 left-0 right-0 z-50 glass-container"
+        className="fixed top-0 left-0 right-0 z-50 glass-container pt-[env(safe-area-inset-top,0px)]"
         style={{ border: 'none' }}
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        <div className="max-w-7xl mx-auto px-6 py-1 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 sm:py-1 flex items-center justify-between gap-2">
           {/* Logo */}
           <motion.div 
-            className="flex items-center gap-3"
-            whileHover={{ scale: 1.05 }}
+            className="flex items-center gap-2 min-w-0 shrink"
+            whileHover={{ scale: 1.02 }}
           >
-            <img src={logo} alt="ElabSoft Studio Logo" className="h-56 w-auto object-contain drop-shadow-lg" style={{ background: 'none' }} />
+            <img
+              src={logo}
+              alt="ElabSoft Studio Logo"
+              className="h-12 w-auto max-h-[20vh] sm:h-16 md:h-24 lg:h-36 xl:h-44 object-contain object-left drop-shadow-lg"
+              style={{ background: 'none' }}
+              decoding="async"
+              fetchPriority="high"
+            />
           </motion.div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8 -mt-10">
+          <div className="hidden md:flex items-center gap-8 md:-mt-6 lg:-mt-10">
             <NavButton
               active={activeScreen === 'engine'}
               onClick={() => setActiveScreen('engine')}
@@ -119,7 +143,7 @@ export default function App() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.5 }}
-          className="pt-10 md:pt-12"
+          className="pt-[calc(3.5rem+env(safe-area-inset-top,0px))] sm:pt-16 md:pt-20"
         >
           {activeScreen === 'engine' && (
             <>
@@ -128,8 +152,16 @@ export default function App() {
               <ExecutionFramework />
             </>
           )}
-          {activeScreen === 'blueprint' && <BlueprintArchive />}
-          {activeScreen === 'contact' && <Contact />}
+          {activeScreen === 'blueprint' && (
+            <Suspense fallback={<RouteFallback />}>
+              <BlueprintArchive />
+            </Suspense>
+          )}
+          {activeScreen === 'contact' && (
+            <Suspense fallback={<RouteFallback />}>
+              <Contact />
+            </Suspense>
+          )}
         </motion.div>
       </AnimatePresence>
 

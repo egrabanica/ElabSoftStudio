@@ -1,4 +1,4 @@
-import { motion } from 'motion/react';
+import { motion, useReducedMotion } from 'motion/react';
 import { useState, useRef, useEffect } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
@@ -27,7 +27,7 @@ const projects: Project[] = [
       scalability: '500K+ users',
       architecture: 'React Native + AWS Lambda',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&q=75&auto=format&fit=crop',
   },
   {
     id: '2',
@@ -39,7 +39,7 @@ const projects: Project[] = [
       scalability: '10M+ requests/day',
       architecture: 'Next.js + Vercel',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=640&q=75&auto=format&fit=crop',
   },
   {
     id: '3',
@@ -51,7 +51,7 @@ const projects: Project[] = [
       scalability: '1M+ products',
       architecture: 'Jamstack + GraphQL',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=640&q=75&auto=format&fit=crop',
   },
   {
     id: '4',
@@ -63,7 +63,7 @@ const projects: Project[] = [
       scalability: '50K+ repos',
       architecture: 'Python + FastAPI',
     },
-    imageUrl: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=800&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=640&q=75&auto=format&fit=crop',
   },
 ];
 
@@ -152,12 +152,13 @@ export function BlueprintArchive() {
     const container = containerRef.current;
     if (!container) return;
 
-    const amount = direction === 'left' ? -540 : 540;
+    const step = Math.min(540, Math.max(280, Math.floor(container.clientWidth * 0.85)));
+    const amount = direction === 'left' ? -step : step;
     container.scrollBy({ left: amount, behavior: 'smooth' });
   };
 
   return (
-    <div className="min-h-screen py-24 px-6">
+    <div className="min-h-screen py-12 sm:py-20 md:py-24 px-4 sm:px-6">
       <motion.div
         className="max-w-7xl mx-auto mb-16"
         initial={{ opacity: 0, y: 20 }}
@@ -166,7 +167,7 @@ export function BlueprintArchive() {
         transition={{ duration: 0.8 }}
       >
         <h2 className="mb-4">{t.titleStart} <span className="text-gradient-copper">{t.titleAccent}</span></h2>
-        <p className="text-xl max-w-2xl">
+        <p className="text-base sm:text-lg md:text-xl max-w-2xl">
           {t.subtitle}
         </p>
       </motion.div>
@@ -178,7 +179,7 @@ export function BlueprintArchive() {
           aria-label={t.previous}
           onClick={() => scrollProjects('left')}
           disabled={!canScrollLeft}
-          className="absolute -left-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-2xl glass-container-strong flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          className="absolute left-0 sm:-left-3 md:-left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl glass-container-strong flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           whileHover={{ scale: canScrollLeft ? 1.08 : 1 }}
           whileTap={{ scale: canScrollLeft ? 0.96 : 1 }}
         >
@@ -208,7 +209,7 @@ export function BlueprintArchive() {
           aria-label={t.next}
           onClick={() => scrollProjects('right')}
           disabled={!canScrollRight}
-          className="absolute -right-5 top-1/2 -translate-y-1/2 z-20 w-12 h-12 rounded-2xl glass-container-strong flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed"
+          className="absolute right-0 sm:-right-3 md:-right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 sm:w-12 sm:h-12 rounded-2xl glass-container-strong flex items-center justify-center transition-all disabled:opacity-30 disabled:cursor-not-allowed"
           whileHover={{ scale: canScrollRight ? 1.08 : 1 }}
           whileTap={{ scale: canScrollRight ? 0.96 : 1 }}
         >
@@ -229,10 +230,11 @@ function ProjectCard({
   labels: { latency: string; scalability: string; architecture: string };
 }) {
   const [isHovered, setIsHovered] = useState(false);
+  const reduceMotion = useReducedMotion();
 
   return (
     <motion.div
-      className="relative shrink-0 w-[500px] h-[650px] snap-center"
+      className="relative shrink-0 w-[min(100vw-2.5rem,500px)] min-h-[min(90vh,650px)] sm:h-[650px] snap-center"
       initial={{ opacity: 0, x: 50 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
@@ -250,7 +252,7 @@ function ProjectCard({
         transition={{ duration: 0.3 }}
       >
         {/* Wireframe Ghost / Full Color Image */}
-        <div className="relative h-[400px] overflow-hidden refraction-effect">
+        <div className="relative h-[min(42vh,400px)] sm:h-[400px] overflow-hidden refraction-effect">
           {/* Wireframe State */}
           <motion.div
             className="absolute inset-0 flex items-center justify-center"
@@ -277,10 +279,18 @@ function ProjectCard({
               
               {/* 3D Wireframe Elements */}
               <motion.g
-                animate={{
-                  rotateY: [0, 360],
-                }}
-                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                animate={
+                  reduceMotion
+                    ? { rotateY: 0 }
+                    : {
+                        rotateY: [0, 360],
+                      }
+                }
+                transition={
+                  reduceMotion
+                    ? { duration: 0 }
+                    : { duration: 20, repeat: Infinity, ease: 'linear' }
+                }
                 style={{ transformOrigin: '50% 50%' }}
               >
                 <rect x="80" y="80" width="240" height="160" fill="none" stroke={project.wireframeColor} strokeWidth="2" />
@@ -299,11 +309,15 @@ function ProjectCard({
                 fill="none"
                 stroke={project.wireframeColor}
                 strokeWidth="2"
-                animate={{
-                  scale: [1, 1.2, 1],
-                  opacity: [0.5, 1, 0.5],
-                }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={
+                  reduceMotion
+                    ? { scale: 1, opacity: 0.75 }
+                    : {
+                        scale: [1, 1.2, 1],
+                        opacity: [0.5, 1, 0.5],
+                      }
+                }
+                transition={reduceMotion ? { duration: 0 } : { duration: 2, repeat: Infinity }}
               />
             </svg>
           </motion.div>
@@ -318,13 +332,16 @@ function ProjectCard({
               src={project.imageUrl}
               alt={project.title}
               className="w-full h-full object-cover"
+              loading="lazy"
+              decoding="async"
+              sizes="(max-width: 640px) 90vw, 500px"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
           </motion.div>
         </div>
 
         {/* Content */}
-        <div className="flex-1 p-8 flex flex-col">
+        <div className="flex-1 p-5 sm:p-8 flex flex-col">
           <h3 className="mb-3">{project.title}</h3>
           <p className="mb-6 flex-1 leading-relaxed">{project.description}</p>
 

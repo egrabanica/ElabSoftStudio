@@ -83,7 +83,7 @@ export function Contact() {
   };
 
   return (
-    <div className="min-h-screen py-20 px-6">
+    <div className="min-h-screen py-12 sm:py-16 md:py-20 px-4 sm:px-6 pb-[env(safe-area-inset-bottom,0px)]">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <motion.div
@@ -92,18 +92,18 @@ export function Contact() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-5xl md:text-6xl font-bold mb-4">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
             {t.title} <span className="text-[#D27D59]">{t.titleAccent}</span>
           </h1>
-          <p className="text-xl text-white/90 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-white/90 max-w-2xl mx-auto px-1">
             {t.subtitle}
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-12">
+        <div className="grid md:grid-cols-2 gap-8 md:gap-12">
           {/* Contact Form */}
           <motion.div
-            className="glass-container p-8 rounded-3xl"
+            className="glass-container p-5 sm:p-8 rounded-3xl"
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
