@@ -134,7 +134,17 @@ html.a11y-large-text {
   font-size: 118%;
 }
 
-html.a11y-high-saturation body {
+/* Saturation on inner wrappers only — never on body/html/#root, because filter on an
+   ancestor makes position:fixed use that ancestor as containing block (breaks nav, a11y orb, etc.). */
+html.a11y-high-saturation .a11y-saturate-scope,
+html.a11y-high-saturation .a11y-saturate-scope-nav {
+  -webkit-filter: saturate(1.6) contrast(1.12);
+  filter: saturate(1.6) contrast(1.12);
+}
+
+/* Noise overlay sits above #root (z-index:1); without this it stays muted and hides the boost. */
+html.a11y-high-saturation body::before {
+  -webkit-filter: saturate(1.6) contrast(1.12);
   filter: saturate(1.6) contrast(1.12);
 }
 

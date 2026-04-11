@@ -202,8 +202,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-[#1F1F1F] mb-1">Email</h3>
-                    <p className="text-[#1F1F1F]">contact@elabsoft.studio</p>
-                    <p className="text-[#1F1F1F]">hello@elabsoft.studio</p>
+                    <p className="text-[#1F1F1F]">elabsoftstudio@outlook.com</p>
                   </div>
                 </div>
 
@@ -213,8 +212,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-[#1F1F1F] mb-1">{t.phone}</h3>
-                    <p className="text-[#1F1F1F]">+1 (555) 123-4567</p>
-                    <p className="text-[#1F1F1F]">+1 (555) 987-6543</p>
+                    <p className="text-[#1F1F1F]">+383 49 629 594</p>
                   </div>
                 </div>
 
@@ -224,8 +222,7 @@ export function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-[#1F1F1F] mb-1">{t.location}</h3>
-                    <p className="text-[#1F1F1F]">123 Innovation Drive</p>
-                    <p className="text-[#1F1F1F]">Tech Valley, CA 94000</p>
+                    <p className="text-[#1F1F1F]">Pristina, Kosovo</p>
                   </div>
                 </div>
               </div>

@@ -38,7 +38,7 @@ export default function App() {
 
   return (
     <div className="relative min-h-screen">
-      {/* Navigation */}
+      {/* Navigation stays outside .a11y-saturate-scope so position:fixed anchors to the viewport */}
       <motion.nav
         className="fixed top-0 left-0 right-0 z-50 glass-container pt-[env(safe-area-inset-top,0px)]"
         style={{ border: 'none' }}
@@ -46,6 +46,7 @@ export default function App() {
         animate={{ y: 0 }}
         transition={{ duration: 0.6 }}
       >
+        <div className="a11y-saturate-scope-nav w-full">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-1.5 sm:py-1 flex items-center justify-between gap-2">
           {/* Logo */}
           <motion.div 
@@ -133,8 +134,10 @@ export default function App() {
             </motion.div>
           )}
         </AnimatePresence>
+        </div>
       </motion.nav>
 
+      <div className="a11y-saturate-scope min-h-screen">
       {/* Main Content */}
       <AnimatePresence mode="wait">
         <motion.div
@@ -167,8 +170,8 @@ export default function App() {
 
       {/* Footer */}
       <ProfessionalFooter />
+      </div>
 
-      {/* Global accessibility action */}
       <AccessibilityOrb />
     </div>
   );

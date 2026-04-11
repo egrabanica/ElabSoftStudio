@@ -14,7 +14,7 @@ export function ProfessionalFooter() {
         company: 'Kompania',
         servicesList: ['Infrastrukture Backend', 'API per Ndermarrje', 'Zhvillim Full-Stack', 'Zgjidhje Cloud', 'Inxhinieri DevOps'],
         companyList: ['Rreth Nesh', 'Puna Jone', 'Karriera', 'Blog', 'Kontakti'],
-        copyright: `© ${currentYear} ElabSoft Studio. Te gjitha sistemet operacionale.`,
+        copyright: `© ${currentYear} ElabSoft Studio. All rights reserved.`,
         builtWith: 'Ndertuar me:',
         
       }
@@ -104,15 +104,15 @@ export function ProfessionalFooter() {
               <div className="flex flex-wrap gap-6 text-sm opacity-70">
                 <div className="flex items-center gap-2">
                   <MapPin size={16} className="text-[#A0D2EB]" />
-                  <span>San Francisco, CA</span>
+                  <span>Pristina, Kosovo</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone size={16} className="text-[#A0D2EB]" />
-                  <span>+1 (555) 123-4567</span>
+                  <span>+383 49 629 594</span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Mail size={16} className="text-[#A0D2EB]" />
-                  <span>hello@elabsoft.studio</span>
+                  <span>elabsoftstudio@outlook.com</span>
                 </div>
               </div>
 
