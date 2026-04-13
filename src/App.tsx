@@ -65,7 +65,7 @@ export default function App() {
               <img
                 src={logo}
                 alt="ElabSoft Studio Logo"
-                className="h-12 w-auto max-h-[20vh] sm:h-16 md:h-24 lg:h-36 xl:h-44 object-contain object-left drop-shadow-lg"
+                className="h-16 w-auto max-h-[24vh] sm:h-16 md:h-24 lg:h-36 xl:h-44 object-contain object-left drop-shadow-lg"
                 style={{ background: 'none' }}
                 decoding="async"
                 fetchPriority="high"
