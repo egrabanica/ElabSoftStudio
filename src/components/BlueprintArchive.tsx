@@ -7,6 +7,7 @@ interface Project {
   id: string;
   title: string;
   description: string;
+  projectUrl: string;
   wireframeColor: string;
   specs: {
     latency: string;
@@ -19,51 +20,42 @@ interface Project {
 const projects: Project[] = [
   {
     id: '1',
-    title: 'React Native FinTech App',
-    description: 'Cross-platform mobile banking application built with React Native, Redux, and serverless backend. Real-time payment processing with end-to-end encryption.',
+    title: 'ZE News',
+    description: 'News and fact-checking platform delivering real-time updates with trusted reporting. I worked on the web experience, structure, and content presentation.',
+    projectUrl: 'https://www.zennews.net/',
     wireframeColor: '#D27D59',
     specs: {
-      latency: '120ms',
-      scalability: '500K+ users',
-      architecture: 'React Native + AWS Lambda',
+      latency: 'Real-time updates',
+      scalability: 'Multi-category publishing',
+      architecture: 'Modern web stack',
     },
     imageUrl: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=640&q=75&auto=format&fit=crop',
   },
   {
     id: '2',
-    title: 'SaaS Dashboard Platform',
-    description: 'Enterprise analytics dashboard built with Next.js, TypeScript, and PostgreSQL. Features real-time data visualization, multi-tenancy, and role-based access control.',
+    title: 'Thaqi Vertrieb',
+    description: 'Business website for leaflet and flyer distribution services in Hannover. I contributed to the online presence and service-focused presentation.',
+    projectUrl: 'https://thaqiprospektvertrieb.de/',
     wireframeColor: '#A0D2EB',
     specs: {
-      latency: '40ms',
-      scalability: '10M+ requests/day',
-      architecture: 'Next.js + Vercel',
+      latency: 'Fast page delivery',
+      scalability: 'Lead generation ready',
+      architecture: 'Responsive web build',
     },
     imageUrl: 'https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=640&q=75&auto=format&fit=crop',
   },
   {
     id: '3',
-    title: 'E-Commerce Headless CMS',
-    description: 'Jamstack e-commerce platform with headless Shopify, GraphQL API layer, and React frontend. Optimized for performance with edge caching and CDN delivery.',
+    title: 'INVENT Platform',
+    description: 'Student-driven software development and project management platform. I worked on features that support project discovery, sign-in flow, and client-facing pages.',
+    projectUrl: 'https://tests.invent.york.citycollege.eu/',
     wireframeColor: '#D27D59',
     specs: {
-      latency: '85ms',
-      scalability: '1M+ products',
-      architecture: 'Jamstack + GraphQL',
+      latency: 'Secure sign-in flows',
+      scalability: 'Portfolio of projects',
+      architecture: 'Full-stack web platform',
     },
     imageUrl: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=640&q=75&auto=format&fit=crop',
-  },
-  {
-    id: '4',
-    title: 'AI Code Review System',
-    description: 'Machine learning powered code analysis tool built with Python, FastAPI, and TensorFlow. Automated PR reviews, bug detection, and code quality scoring.',
-    wireframeColor: '#A0D2EB',
-    specs: {
-      latency: '2.1s',
-      scalability: '50K+ repos',
-      architecture: 'Python + FastAPI',
-    },
-    imageUrl: 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=640&q=75&auto=format&fit=crop',
   },
 ];
 
@@ -83,6 +75,7 @@ export function BlueprintArchive() {
         latency: 'Vonesa',
         scalability: 'Shkallezueshmeri',
         architecture: 'Arkitektura',
+        visitProject: 'Vizito Projektin',
       }
     : {
         titleStart: 'Featured',
@@ -94,30 +87,26 @@ export function BlueprintArchive() {
         latency: 'Latency',
         scalability: 'Scalability',
         architecture: 'Architecture',
+        visitProject: 'Visit Project',
       };
 
   const localizedProjects = language === 'sq'
     ? projects.map((project) => {
         const sqMap: Record<string, { title: string; description: string }> = {
           '1': {
-            title: 'Aplikacion FinTech me React Native',
+            title: 'ZE News',
             description:
-              'Aplikacion bankar cross-platform i ndertuar me React Native, Redux dhe backend serverless. Procesim pagesash ne kohe reale me enkriptim fund-me-fund.',
+              'Platforme lajmesh dhe fact-checking me perditesime ne kohe reale. Kam punuar ne eksperiencen web, strukturen dhe paraqitjen e permbajtjes.',
           },
           '2': {
-            title: 'Platforme Dashboard SaaS',
+            title: 'Thaqi Vertrieb',
             description:
-              'Dashboard analitik enterprise i ndertuar me Next.js, TypeScript dhe PostgreSQL. Ofron vizualizim te dhenash ne kohe reale, multi-tenancy dhe kontroll aksesesh sipas roleve.',
+              'Webfaqe biznesi per shperndarjen e fletushkave dhe flyerave ne Hannover. Kam kontribuar ne prezencen online dhe paraqitjen e sherbimeve.',
           },
           '3': {
-            title: 'CMS Headless per E-Commerce',
+            title: 'Platforma INVENT',
             description:
-              'Platforme Jamstack e-commerce me Shopify headless, shtrese API GraphQL dhe frontend React. E optimizuar per performance me edge caching dhe CDN.',
-          },
-          '4': {
-            title: 'Sistem AI per Code Review',
-            description:
-              'Mjet analize kodi me machine learning i ndertuar me Python, FastAPI dhe TensorFlow. Rishikime automatike PR, zbulim bugs dhe vleresim cilesie kodi.',
+              'Platforme studentore per zhvillim software dhe menaxhim projektesh. Kam punuar ne funksione per zbulimin e projekteve, hyrjen ne sistem dhe faqet per klientet.',
           },
         };
         return {
@@ -199,6 +188,7 @@ export function BlueprintArchive() {
                 latency: t.latency,
                 scalability: t.scalability,
                 architecture: t.architecture,
+                visitProject: t.visitProject,
               }}
             />
           ))}
@@ -227,7 +217,7 @@ function ProjectCard({
 }: {
   project: Project;
   index: number;
-  labels: { latency: string; scalability: string; architecture: string };
+  labels: { latency: string; scalability: string; architecture: string; visitProject: string };
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const reduceMotion = useReducedMotion();
@@ -250,6 +240,7 @@ function ProjectCard({
         }}
         whileHover={{ scale: 1.02 }}
         transition={{ duration: 0.3 }}
+        onClick={() => window.open(project.projectUrl, '_blank', 'noopener,noreferrer')}
       >
         {/* Wireframe Ghost / Full Color Image */}
         <div className="relative h-[min(42vh,400px)] sm:h-[400px] overflow-hidden refraction-effect">
@@ -344,6 +335,17 @@ function ProjectCard({
         <div className="flex-1 p-5 sm:p-8 flex flex-col">
           <h3 className="mb-3">{project.title}</h3>
           <p className="mb-6 flex-1 leading-relaxed">{project.description}</p>
+
+          <button
+            type="button"
+            onClick={(event) => {
+              event.stopPropagation();
+              window.open(project.projectUrl, '_blank', 'noopener,noreferrer');
+            }}
+            className="mb-4 inline-flex items-center justify-center px-4 py-2 rounded-xl glass-container text-sm font-semibold text-[#D27D59] hover:text-[#E89B7A] transition-colors w-fit"
+          >
+            {labels.visitProject}
+          </button>
 
           {/* Spec Tags */}
           <div className="flex flex-wrap gap-2">
