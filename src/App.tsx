@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { EngineRoom } from './components/EngineRoom';
 import { CoreExpertise } from './components/CoreExpertise';
+import { AppTypes } from './components/AppTypes';
 import { ExecutionFramework } from './components/ExecutionFramework';
 import { ProfessionalFooter } from './components/ProfessionalFooter';
 import { AccessibilityOrb } from './components/AccessibilityOrb';
@@ -152,6 +153,7 @@ export default function App() {
             <>
               <EngineRoom />
               <CoreExpertise />
+              <AppTypes />
               <ExecutionFramework />
             </>
           )}
