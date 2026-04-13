@@ -1,10 +1,17 @@
 import { motion } from 'motion/react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { useState } from 'react';
+import emailjs from '@emailjs/browser';
 import { useLanguage } from '../hooks/useLanguage';
+
+const CONTACT_EMAIL = 'elabsoftstudio@outlook.com';
+const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID?.trim() || '';
+const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID?.trim() || '';
+const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY?.trim() || '';
 
 export function Contact() {
   const language = useLanguage();
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle');
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -38,6 +45,9 @@ export function Contact() {
       readyToStart: 'Ready to Start?',
       ctaText: "Let's discuss your project and turn your vision into reality.",
       responseTime: 'Response time: Within 24 hours',
+      sending: 'Sending…',
+      sendSuccess: 'Message sent. We will reply soon.',
+      sendError: 'Could not send. Please email us directly.',
     },
     sq: {
       title: 'Na',
@@ -64,18 +74,45 @@ export function Contact() {
       readyToStart: 'Gati per te filluar?',
       ctaText: 'Le te diskutojme projektin tuaj dhe ta kthejme vizionin ne realitet.',
       responseTime: 'Koha e pergjigjes: Brenda 24 oreve',
+      sending: 'Duke derguar…',
+      sendSuccess: 'Mesazhi u dergua. Do tju pergjigjemi se shpejti.',
+      sendError: 'Nuk u dergua. Ju lutem na shkruani direkt me email.',
     },
   } as const;
 
   const t = content[language];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
-    console.log('Form submitted:', formData);
+    setSubmitStatus('sending');
+    try {
+      if (!EMAILJS_SERVICE_ID || !EMAILJS_TEMPLATE_ID || !EMAILJS_PUBLIC_KEY) {
+        throw new Error('EmailJS is not configured');
+      }
+
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          user_name: formData.name,
+          user_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        {
+          publicKey: EMAILJS_PUBLIC_KEY,
+        }
+      );
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+    } catch {
+      setSubmitStatus('error');
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    if (submitStatus !== 'idle') setSubmitStatus('idle');
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -176,13 +213,28 @@ export function Contact() {
 
               <motion.button
                 type="submit"
-                className="w-full px-6 py-4 bg-[#D27D59] text-white rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-[#C86D49] transition-colors"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
+                disabled={submitStatus === 'sending'}
+                className="w-full px-6 py-4 bg-[#D27D59] text-white rounded-xl font-medium flex items-center justify-center gap-2 hover:bg-[#C86D49] transition-colors disabled:opacity-60 disabled:pointer-events-none"
+                whileHover={submitStatus === 'sending' ? undefined : { scale: 1.02 }}
+                whileTap={submitStatus === 'sending' ? undefined : { scale: 0.98 }}
               >
                 <Send size={20} />
-                {t.sendMessage}
+                {submitStatus === 'sending' ? t.sending : t.sendMessage}
               </motion.button>
+
+              {submitStatus === 'success' && (
+                <p className="text-sm text-emerald-400/95" role="status">
+                  {t.sendSuccess}
+                </p>
+              )}
+              {submitStatus === 'error' && (
+                <p className="text-sm text-red-400/95" role="alert">
+                  {t.sendError}{' '}
+                  <a className="underline text-[#D27D59] hover:text-[#E89B7A]" href={`mailto:${CONTACT_EMAIL}`}>
+                    {CONTACT_EMAIL}
+                  </a>
+                </p>
+              )}
             </form>
           </motion.div>
 
