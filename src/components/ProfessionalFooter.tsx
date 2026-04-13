@@ -3,7 +3,7 @@ import { Github, Linkedin, Twitter, Mail, MapPin, Phone } from 'lucide-react';
 import logo from 'figma:asset/952983e2909debfaa69697fd87a26c282a28d218.png';
 import { useLanguage } from '../hooks/useLanguage';
 
-export function ProfessionalFooter() {
+export function ProfessionalFooter({ onLogoClick }: { onLogoClick?: () => void }) {
   const currentYear = new Date().getFullYear();
   const language = useLanguage();
   const t = language === 'sq'
@@ -49,13 +49,15 @@ export function ProfessionalFooter() {
               {/* Company Info */}
               <div className="md:col-span-2">
                 <div className="mb-6">
-                  <img
-                    src={logo}
-                    alt="ElabSoft Studio Brand Logo"
-                    className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto object-contain object-left drop-shadow-lg"
-                    decoding="async"
-                    loading="lazy"
-                  />
+                  <button type="button" aria-label="Go to home" onClick={onLogoClick}>
+                    <img
+                      src={logo}
+                      alt="ElabSoft Studio Brand Logo"
+                      className="h-24 sm:h-28 md:h-32 lg:h-36 w-auto object-contain object-left drop-shadow-lg"
+                      decoding="async"
+                      loading="lazy"
+                    />
+                  </button>
                 </div>
                 <p className="text-sm leading-relaxed opacity-80 mb-6 max-w-sm">
                   {t.description}

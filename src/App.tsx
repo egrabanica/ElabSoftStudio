@@ -54,14 +54,23 @@ export default function App() {
             className="flex items-center gap-2 min-w-0 shrink"
             whileHover={{ scale: 1.02 }}
           >
-            <img
-              src={logo}
-              alt="ElabSoft Studio Logo"
-              className="h-12 w-auto max-h-[20vh] sm:h-16 md:h-24 lg:h-36 xl:h-44 object-contain object-left drop-shadow-lg"
-              style={{ background: 'none' }}
-              decoding="async"
-              fetchPriority="high"
-            />
+            <button
+              type="button"
+              aria-label="Go to home"
+              onClick={() => {
+                setActiveScreen('engine');
+                setMenuOpen(false);
+              }}
+            >
+              <img
+                src={logo}
+                alt="ElabSoft Studio Logo"
+                className="h-12 w-auto max-h-[20vh] sm:h-16 md:h-24 lg:h-36 xl:h-44 object-contain object-left drop-shadow-lg"
+                style={{ background: 'none' }}
+                decoding="async"
+                fetchPriority="high"
+              />
+            </button>
           </motion.div>
 
           {/* Desktop Navigation */}
@@ -171,7 +180,13 @@ export default function App() {
       </AnimatePresence>
 
       {/* Footer */}
-      <ProfessionalFooter />
+      <ProfessionalFooter
+        onLogoClick={() => {
+          setActiveScreen('engine');
+          setMenuOpen(false);
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }}
+      />
       </div>
 
       <AccessibilityOrb />
