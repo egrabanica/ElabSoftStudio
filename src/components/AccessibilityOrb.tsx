@@ -47,13 +47,13 @@ export function AccessibilityOrb() {
   const [largeText, setLargeText] = useState(false);
   const [highSaturation, setHighSaturation] = useState(false);
   const [noImages, setNoImages] = useState(false);
-  const [languageMode, setLanguageMode] = useState<'en' | 'sq'>('sq');
+  const [languageMode, setLanguageMode] = useState<'en' | 'sq'>('en');
 
   useEffect(() => {
     const savedLargeText = localStorage.getItem('a11y-large-text') === 'true';
     const savedHighSaturation = localStorage.getItem('a11y-high-saturation') === 'true';
     const savedNoImages = localStorage.getItem('a11y-no-images') === 'true';
-    const savedLanguage = (localStorage.getItem('a11y-language-mode') as 'en' | 'sq') || 'sq';
+    const savedLanguage = (localStorage.getItem('a11y-language-mode') as 'en' | 'sq') || 'en';
 
     setLargeText(savedLargeText);
     setHighSaturation(savedHighSaturation);

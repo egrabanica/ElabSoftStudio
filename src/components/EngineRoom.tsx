@@ -114,6 +114,7 @@ export function EngineRoom() {
           </motion.div>
 
           <h1 className="mb-6">
+            <span className="sr-only">ElabSoft Studio — </span>
             {t.line1}<br />
             <span className="text-gradient-copper">{t.line2}</span><br />
             {t.line3}<br />

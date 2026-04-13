@@ -76,6 +76,8 @@ export function BlueprintArchive() {
         scalability: 'Shkallezueshmeri',
         architecture: 'Arkitektura',
         visitProject: 'Vizito Projektin',
+        crawlNavLabel: 'Lidhje te projekteve te publikuara',
+        crawlNavIntro: 'Projekte te zgjedhura (lidhje te drejtpërdrejta për motorët e kërkimit):',
       }
     : {
         titleStart: 'Featured',
@@ -88,6 +90,8 @@ export function BlueprintArchive() {
         scalability: 'Scalability',
         architecture: 'Architecture',
         visitProject: 'Visit Project',
+        crawlNavLabel: 'Published project links',
+        crawlNavIntro: 'Selected work (direct links for search engines):',
       };
 
   const localizedProjects = language === 'sq'
@@ -206,6 +210,23 @@ export function BlueprintArchive() {
           <ChevronRight size={22} className="text-[#D27D59]" />
         </motion.button>
       </div>
+
+      <nav aria-label={t.crawlNavLabel} className="max-w-7xl mx-auto mt-10 px-4 sm:px-6">
+        <p className="text-sm opacity-70 mb-3 max-w-2xl">{t.crawlNavIntro}</p>
+        <ul className="flex flex-wrap gap-x-6 gap-y-2 text-sm underline-offset-4">
+          {localizedProjects.map((p) => (
+            <li key={p.id}>
+              <a
+                href={p.projectUrl}
+                rel="noopener noreferrer"
+                className="text-[#D27D59] hover:text-[#E89B7A] underline decoration-[#D27D59]/40 hover:decoration-[#D27D59]"
+              >
+                {p.title}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
     </div>
   );
 }

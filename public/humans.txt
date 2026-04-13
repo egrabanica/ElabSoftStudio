@@ -1,0 +1,11 @@
+/* TEAM */
+Studio: ElabSoft Studio
+Site: https://elabsoft.com/
+
+/* THANKS */
+Built with React, TypeScript, Vite, and Motion.
+
+/* SITE */
+Last update: 2026-04-13
+Standards: HTML5, CSS3, ES2022
+IDE: Cursor

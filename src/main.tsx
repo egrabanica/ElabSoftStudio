@@ -3,8 +3,8 @@
   import App from "./App.tsx";
   import "./index.css";
 
-const storedLanguage = localStorage.getItem("a11y-language-mode");
-document.documentElement.lang = storedLanguage === "en" ? "en" : "sq";
+const storedLanguage = localStorage.getItem('a11y-language-mode');
+document.documentElement.lang = storedLanguage === 'sq' ? 'sq' : 'en';
 
   createRoot(document.getElementById("root")!).render(<App />);
   

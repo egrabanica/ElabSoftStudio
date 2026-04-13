@@ -9,6 +9,15 @@ import { AccessibilityOrb } from './components/AccessibilityOrb';
 import { Menu, X } from 'lucide-react';
 import logo from 'figma:asset/952983e2909debfaa69697fd87a26c282a28d218.png';
 import { useLanguage } from './hooks/useLanguage';
+import {
+  SITE_ORIGIN,
+  setCanonical,
+  setJsonLd,
+  upsertMeta,
+  upsertMetaName,
+  upsertMetaProperty,
+} from './utils/seo';
+import { buildDynamicStructuredData } from './utils/pageStructuredData';
 
 const BlueprintArchive = lazy(async () => {
   const m = await import('./components/BlueprintArchive');
@@ -29,13 +38,30 @@ function RouteFallback() {
   );
 }
 
+function getInitialScreen(): 'engine' | 'blueprint' | 'contact' {
+  if (typeof window === 'undefined') return 'engine';
+  const h = window.location.hash;
+  if (h === '#portfolio') return 'blueprint';
+  if (h === '#contact') return 'contact';
+  return 'engine';
+}
+
 export default function App() {
-  const [activeScreen, setActiveScreen] = useState<'engine' | 'blueprint' | 'contact'>('engine');
+  const [activeScreen, setActiveScreen] = useState<'engine' | 'blueprint' | 'contact'>(getInitialScreen);
   const [menuOpen, setMenuOpen] = useState(false);
   const language = useLanguage();
   const t = language === 'sq'
-    ? { home: 'Kreu', portfolio: 'Portofoli', contact: 'Kontakti' }
-    : { home: 'Home', portfolio: 'Portfolio', contact: 'Contact' };
+    ? { home: 'Kreu', portfolio: 'Portofoli', contact: 'Kontakti', navLabel: 'Navigimi kryesor' }
+    : { home: 'Home', portfolio: 'Portfolio', contact: 'Contact', navLabel: 'Primary navigation' };
+
+  useEffect(() => {
+    const hash =
+      activeScreen === 'blueprint' ? '#portfolio' : activeScreen === 'contact' ? '#contact' : '';
+    const next = `${window.location.pathname}${window.location.search}${hash}`;
+    if (`${window.location.pathname}${window.location.search}${window.location.hash}` !== next) {
+      window.history.replaceState(null, '', next);
+    }
+  }, [activeScreen]);
 
   useEffect(() => {
     const metadataByScreen = {
@@ -74,22 +100,31 @@ export default function App() {
     const metadata = metadataByScreen[activeScreen];
     document.title = metadata.title;
 
-    const setMeta = (selector: string, content: string) => {
-      const element = document.querySelector<HTMLMetaElement>(selector);
-      if (element) element.content = content;
-    };
+    const publicUrl =
+      activeScreen === 'blueprint'
+        ? `${SITE_ORIGIN}/#portfolio`
+        : activeScreen === 'contact'
+          ? `${SITE_ORIGIN}/#contact`
+          : `${SITE_ORIGIN}/`;
 
-    setMeta('meta[name="description"]', metadata.description);
-    setMeta('meta[property="og:title"]', metadata.title);
-    setMeta('meta[property="og:description"]', metadata.description);
-    setMeta('meta[name="twitter:title"]', metadata.title);
-    setMeta('meta[name="twitter:description"]', metadata.description);
+    upsertMeta('meta[name="description"]', metadata.description);
+    upsertMetaProperty('og:title', metadata.title);
+    upsertMetaProperty('og:description', metadata.description);
+    upsertMetaProperty('og:url', publicUrl);
+    upsertMetaName('twitter:title', metadata.title);
+    upsertMetaName('twitter:description', metadata.description);
+    upsertMetaProperty('og:locale', language === 'sq' ? 'sq_XK' : 'en_US');
+    upsertMetaProperty('og:locale:alternate', language === 'sq' ? 'en_US' : 'sq_XK');
+
+    setCanonical(`${SITE_ORIGIN}/`);
+    setJsonLd('elabsoft-page-jsonld', buildDynamicStructuredData(activeScreen, language));
   }, [activeScreen, language]);
 
   return (
     <div className="relative min-h-screen">
       {/* Navigation stays outside .a11y-saturate-scope so position:fixed anchors to the viewport */}
       <motion.nav
+        aria-label={t.navLabel}
         className="fixed top-0 left-0 right-0 z-50 glass-container pt-[env(safe-area-inset-top,0px)]"
         style={{ border: 'none' }}
         initial={{ y: -100 }}
@@ -197,7 +232,7 @@ export default function App() {
       </motion.nav>
 
       <div className="a11y-saturate-scope min-h-screen">
-      {/* Main Content */}
+      <main id="main-content">
       <AnimatePresence mode="wait">
         <motion.div
           key={activeScreen}
@@ -236,6 +271,7 @@ export default function App() {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }}
       />
+      </main>
       </div>
 
       <AccessibilityOrb />
