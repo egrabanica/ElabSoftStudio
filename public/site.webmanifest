@@ -1,0 +1,16 @@
+{
+  "name": "ElabSoft Studio",
+  "short_name": "ElabSoft",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#050505",
+  "theme_color": "#050505",
+  "description": "Custom software, enterprise web applications, backend APIs, and scalable infrastructure.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

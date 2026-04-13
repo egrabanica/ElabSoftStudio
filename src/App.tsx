@@ -1,4 +1,4 @@
-import { lazy, Suspense, useState } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { EngineRoom } from './components/EngineRoom';
 import { CoreExpertise } from './components/CoreExpertise';
@@ -36,6 +36,55 @@ export default function App() {
   const t = language === 'sq'
     ? { home: 'Kreu', portfolio: 'Portofoli', contact: 'Kontakti' }
     : { home: 'Home', portfolio: 'Portfolio', contact: 'Contact' };
+
+  useEffect(() => {
+    const metadataByScreen = {
+      engine: {
+        title:
+          language === 'sq'
+            ? 'ElabSoft Studio | Zhvillim Softuerik dhe Infrastrukture'
+            : 'ElabSoft Studio | Custom Software & Full-Stack Development',
+        description:
+          language === 'sq'
+            ? 'ElabSoft Studio zhvillon aplikacione te personalizuara, sisteme enterprise dhe infrastrukture digjitale me performance te larte.'
+            : 'ElabSoft Studio builds high-performance custom software, enterprise web applications, backend systems, and scalable digital infrastructure.',
+      },
+      blueprint: {
+        title:
+          language === 'sq'
+            ? 'Portofoli | ElabSoft Studio'
+            : 'Portfolio | ElabSoft Studio',
+        description:
+          language === 'sq'
+            ? 'Eksploro projektet reale te ElabSoft Studio ne web development, platforma biznesi dhe sisteme software.'
+            : 'Explore ElabSoft Studio real-world projects across web development, business platforms, and software systems.',
+      },
+      contact: {
+        title:
+          language === 'sq'
+            ? 'Kontakti | ElabSoft Studio'
+            : 'Contact | ElabSoft Studio',
+        description:
+          language === 'sq'
+            ? 'Kontakto ElabSoft Studio per projekte software, aplikacione web, API enterprise dhe infrastrukture cloud.'
+            : 'Contact ElabSoft Studio for custom software projects, web applications, enterprise APIs, and cloud infrastructure.',
+      },
+    } as const;
+
+    const metadata = metadataByScreen[activeScreen];
+    document.title = metadata.title;
+
+    const setMeta = (selector: string, content: string) => {
+      const element = document.querySelector<HTMLMetaElement>(selector);
+      if (element) element.content = content;
+    };
+
+    setMeta('meta[name="description"]', metadata.description);
+    setMeta('meta[property="og:title"]', metadata.title);
+    setMeta('meta[property="og:description"]', metadata.description);
+    setMeta('meta[name="twitter:title"]', metadata.title);
+    setMeta('meta[name="twitter:description"]', metadata.description);
+  }, [activeScreen, language]);
 
   return (
     <div className="relative min-h-screen">

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="ElabSoft Studio">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#050505"/>
+      <stop offset="100%" stop-color="#121212"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#D27D59"/>
+      <stop offset="100%" stop-color="#A0D2EB"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="70" y="70" width="1060" height="490" rx="28" fill="none" stroke="url(#accent)" stroke-width="2" opacity="0.45"/>
+  <text x="100" y="255" fill="#FFFFFF" font-size="78" font-family="Arial, Helvetica, sans-serif" font-weight="700">
+    ElabSoft Studio
+  </text>
+  <text x="100" y="325" fill="#D27D59" font-size="36" font-family="Arial, Helvetica, sans-serif">
+    Custom Software and Full-Stack Development
+  </text>
+  <text x="100" y="385" fill="#D9D9D9" font-size="28" font-family="Arial, Helvetica, sans-serif">
+    Web Apps " Enterprise APIs " Backend Infrastructure
+  </text>
+</svg>
