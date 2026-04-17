@@ -5,7 +5,7 @@ import { Send } from 'lucide-react';
 import { useLanguage } from '../hooks/useLanguage';
 import { usePrefersFinePointer } from '../hooks/usePrefersFinePointer';
 
-export function EngineRoom() {
+export function EngineRoom({ onDeployProject }: { onDeployProject?: () => void } = {}) {
   const language = useLanguage();
   const parallax = usePrefersFinePointer();
   const mouseX = useMotionValue(0);
@@ -42,7 +42,6 @@ export function EngineRoom() {
         line4: 'Digjitale',
         subtitle: 'Sisteme softuerike te ndertuara me precizitet per brezin e ardhshem te lidereve te industrise.',
         deploy: 'Nis Projektin',
-        architecture: 'Shiko Arkitekturen',
         
       }
     : {
@@ -52,7 +51,6 @@ export function EngineRoom() {
         line4: 'Foundations',
         subtitle: 'Precision-built software systems for the next generation of industry leaders.',
         deploy: 'Deploy Project',
-        architecture: 'View Architecture',
        
       };
 
@@ -133,6 +131,8 @@ export function EngineRoom() {
                 background: 'linear-gradient(135deg, #D27D59, #E89B7A)',
                 clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
               }}
+              type="button"
+              onClick={onDeployProject}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}
             >
@@ -158,19 +158,6 @@ export function EngineRoom() {
                   clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
                 }}
               />
-            </motion.button>
-
-            <motion.button
-              className="group relative px-6 py-3.5 sm:px-8 sm:py-4 glass-container-strong w-full sm:w-auto min-h-[48px]"
-              style={{
-                clipPath: 'polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px)',
-              }}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <span className="relative font-semibold tracking-wide">
-                {t.architecture}
-              </span>
             </motion.button>
           </div>
         </motion.div>

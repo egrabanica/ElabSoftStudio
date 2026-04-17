@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { Mail, Phone, MapPin, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, ListChecks } from 'lucide-react';
 import { useState } from 'react';
 import emailjs from '@emailjs/browser';
 import { useLanguage } from '../hooks/useLanguage';
@@ -37,11 +37,11 @@ export function Contact() {
       contactInformation: 'Contact Information',
       phone: 'Phone',
       location: 'Location',
-      officeHours: 'Office Hours',
-      mondayFriday: 'Monday - Friday',
-      saturday: 'Saturday',
-      sunday: 'Sunday',
-      closed: 'Closed',
+      projectBrief: 'Project Brief',
+      briefIntro: 'Share these details for a faster, more accurate estimate:',
+      briefItemGoals: 'Your main business goals',
+      briefItemScope: 'Requested features and timeline',
+      briefItemBudget: 'Budget range and target launch date',
       readyToStart: 'Ready to Start?',
       ctaText: "Let's discuss your project and turn your vision into reality.",
       responseTime: 'Response time: Within 24 hours',
@@ -66,11 +66,11 @@ export function Contact() {
       contactInformation: 'Informacion kontakti',
       phone: 'Telefoni',
       location: 'Vendndodhja',
-      officeHours: 'Orari i punes',
-      mondayFriday: 'E hene - E premte',
-      saturday: 'E shtune',
-      sunday: 'E diel',
-      closed: 'Mbyllur',
+      projectBrief: 'Permbledhje Projekti',
+      briefIntro: 'Ndani keto detaje per nje vleresim me te shpejte dhe te sakte:',
+      briefItemGoals: 'Qellimet kryesore te biznesit tuaj',
+      briefItemScope: 'Funksionet e kerkuara dhe afati kohor',
+      briefItemBudget: 'Buxheti orientues dhe data e synuar e lansimit',
       readyToStart: 'Gati per te filluar?',
       ctaText: 'Le te diskutojme projektin tuaj dhe ta kthejme vizionin ne realitet.',
       responseTime: 'Koha e pergjigjes: Brenda 24 oreve',
@@ -281,19 +281,27 @@ export function Contact() {
             </div>
 
             <div className="glass-container p-8 rounded-3xl">
-              <h3 className="text-xl font-bold text-[#1F1F1F] mb-4">{t.officeHours}</h3>
+              <div className="flex items-start gap-4 mb-4">
+                <div className="w-12 h-12 rounded-xl glass-container-strong flex items-center justify-center flex-shrink-0">
+                  <ListChecks className="text-[#D27D59]" size={24} />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-[#1F1F1F]">{t.projectBrief}</h3>
+                  <p className="text-[#1F1F1F]/90 mt-1">{t.briefIntro}</p>
+                </div>
+              </div>
               <div className="space-y-3 text-[#1F1F1F]">
-                <div className="flex justify-between">
-                  <span>{t.mondayFriday}</span>
-                  <span className="font-semibold text-[#1F1F1F]">9:00 AM - 6:00 PM</span>
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#D27D59] flex-shrink-0" />
+                  <span>{t.briefItemGoals}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>{t.saturday}</span>
-                  <span className="font-semibold text-[#1F1F1F]">10:00 AM - 4:00 PM</span>
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#D27D59] flex-shrink-0" />
+                  <span>{t.briefItemScope}</span>
                 </div>
-                <div className="flex justify-between">
-                  <span>{t.sunday}</span>
-                  <span className="font-semibold text-[#1F1F1F]">{t.closed}</span>
+                <div className="flex items-start gap-3">
+                  <span className="mt-1 h-2 w-2 rounded-full bg-[#D27D59] flex-shrink-0" />
+                  <span>{t.briefItemBudget}</span>
                 </div>
               </div>
             </div>

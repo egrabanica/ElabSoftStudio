@@ -2,3 +2,4 @@ User-agent: *
 Allow: /
 
 Sitemap: https://elabsoft.com/sitemap.xml
+Sitemap: https://elabsoft.com/sitemap.txt
