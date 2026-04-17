@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="ElabSoft">
-  <rect width="32" height="32" rx="7" fill="#0ea5e9"/>
-  <path fill="#fff" d="M8 10h6c3.3 0 5 1.7 5 4.5S17.3 19 14 19h-2v3H8V10zm4 6c1.2 0 2-.7 2-1.5S13.2 13 12 13h-2v3h2z"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="ElabSoft">
+  <rect width="48" height="48" rx="10.5" fill="#0ea5e9"/>
+  <path fill="#fff" d="M12 15h9c4.95 0 7.5 2.55 7.5 6.75S25.95 28.5 21 28.5h-3v4.5h-6V15zm6 9c1.8 0 3-.975 3-2.25S19.8 19.5 18 19.5h-3V24h3z"/>
 </svg>

@@ -55,35 +55,6 @@ export default function App() {
     : { home: 'Home', portfolio: 'Portfolio', contact: 'Contact', navLabel: 'Primary navigation' };
 
   useEffect(() => {
-    const cacheSafeLogo = `${logo}${logo.includes('?') ? '&' : '?'}v=elabsoft-logo`;
-
-    const allIconLinks = document.head.querySelectorAll<HTMLLinkElement>(
-      'link[rel="icon"], link[rel="shortcut icon"], link[rel="apple-touch-icon"]'
-    );
-
-    allIconLinks.forEach((link) => {
-      link.href = cacheSafeLogo;
-      link.type = 'image/png';
-    });
-
-    if (!document.head.querySelector('link[rel="icon"]')) {
-      const icon = document.createElement('link');
-      icon.rel = 'icon';
-      icon.type = 'image/png';
-      icon.href = cacheSafeLogo;
-      document.head.appendChild(icon);
-    }
-
-    if (!document.head.querySelector('link[rel="apple-touch-icon"]')) {
-      const apple = document.createElement('link');
-      apple.rel = 'apple-touch-icon';
-      apple.type = 'image/png';
-      apple.href = cacheSafeLogo;
-      document.head.appendChild(apple);
-    }
-  }, []);
-
-  useEffect(() => {
     const hash =
       activeScreen === 'blueprint' ? '#portfolio' : activeScreen === 'contact' ? '#contact' : '';
     const next = `${window.location.pathname}${window.location.search}${hash}`;
